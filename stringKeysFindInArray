@@ -1,0 +1,50 @@
+<?php
+
+
+$ar = array(
+    'build' => array(
+	'h' => array(
+	    'm' => 'm',
+	    't' => 't',
+	),
+	'r' => array(
+	    'T' => "T",
+	),
+	'Op' => array(1,2,3,4),
+    ),
+    'Pur' => array(
+	1,2,3,4
+    ),
+);
+
+
+
+function findTT($data,$keys)
+{
+
+if (count($keys)>1)
+{
+    $cur = array_shift($keys);
+    if (isset($data[$cur]) && is_array($data[$cur]) && count($keys))
+    {
+	return  findTT($data[$cur],$keys);
+    }
+    elseif (!is_array($data[$cur]) && count($keys)==0)
+    {
+	return $data[$cur];
+    }
+    else
+	return null;
+}
+else
+{
+    $key = current($keys);
+    return $data[$key];
+}
+}
+
+
+$start = 'build.h.m.her.is_null';
+var_dump(findTT($ar,explode(".",$start)));
+var_dump(findTT($ar,explode(".",'Pur')));
+var_dump(findTT($ar,explode(".",'build.Op')));
